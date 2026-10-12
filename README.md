@@ -219,3 +219,7 @@ foreach ($cart->products as $i => $p) {
 | `repository does not exist` ตอน pull `laravelsail/php85-composer` | ใช้ `laravelsail/php84-composer:latest` หรือ `composer:2` พร้อม `--ignore-platform-reqs` (ดูข้อ 2) |
 | `docker compose up` ฟ้องหา `vendor/laravel/sail/...` ไม่เจอ | `composer.json` ไม่มี `laravel/sail` หรือยังไม่ได้ `composer install` รัน `docker run --rm -v "${PWD}:/var/www/html" -w /var/www/html laravelsail/php84-composer:latest composer require laravel/sail --dev --ignore-platform-reqs` แล้ว commit `composer.json` + `composer.lock` |
 | `Permission denied` เขียนไฟล์ใน `storage/` หรือสร้างไฟล์ไม่ได้ (WSL/Linux/Mac) | `id -u` / `id -g` ของเครื่องไม่ใช่ 1000 แก้ `WWWUSER` / `WWWGROUP` ใน `.env` ให้ตรง แล้ว `docker compose up -d --build` |
+config -> DBeaver
+conection password : password
+![alt text](image.png)
+![alt text](image-1.png)
