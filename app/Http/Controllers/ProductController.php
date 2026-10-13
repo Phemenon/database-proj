@@ -30,12 +30,16 @@ class ProductController extends Controller
 public function show(Request $request, Product $product)
 {
     $product->load(['category', 'reviews.user']);
+    $user = $request->user();
 
     return view('products.show', [
         'product'    => $product,
-        'inWishlist' => $request->user()
-            ? $request->user()->wishlist()->where('products.id', $product->id)->exists()
+        'inWishlist' => $user
+            ? $user->wishlist()->where('products.id', $product->id)->exists()
             : false,
+        // รีวิวของคนที่ login (ใช้เติมฟอร์มให้แก้) ไม่ต้องยิงคิวรีเพิ่ม
+        'myReview'   => $user ? $product->reviews->firstWhere('user_id', $user->id) : null,
+        'average'    => $product->reviews->avg('rating'),
     ]);
 }
 }
