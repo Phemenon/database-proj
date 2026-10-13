@@ -4,8 +4,8 @@
     <div class="mx-auto flex max-w-7xl items-center gap-6 px-6 py-4">
         <a href="{{ route('home') }}" class="font-heading text-2xl text-primary">Fantasy Shop</a>
 
-        <form action="#" method="GET" class="hidden flex-1 md:block">
-            <input type="search" name="q" placeholder="Search for items..."
+        <form action="{{ route('products.index') }}" method="GET" class="hidden flex-1 md:block">
+            <input type="search" name="q" value="{{ request('q') }}" placeholder="Search for items..."
                    class="w-full rounded-lg border border-line bg-cream px-4 py-2 text-sm focus:border-primary focus:outline-none">
         </form>
 
@@ -55,8 +55,8 @@
     <nav class="border-t border-line">
         <div class="mx-auto flex max-w-7xl gap-6 px-6 py-2 text-sm text-muted">
             <a href="{{ route('home') }}" class="hover:text-primary">Home</a>
-            @foreach (['Weapons', 'Armor', 'Potions', 'Accessories'] as $name)
-                <a href="#" class="hover:text-primary">{{ $name }}</a>
+            @foreach ($categories as $category)
+                <a href="{{ route('products.index', ['category' => $category->id]) }}" class="hover:text-primary">{{ $category->name }}</a>
             @endforeach
         </div>
     </nav>
