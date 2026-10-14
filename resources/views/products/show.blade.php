@@ -36,7 +36,7 @@
                     <button type="button" disabled class="rounded-lg bg-stone-300 px-6 py-2 text-stone-500">Out of Stock</button>
                 @else
                     @auth
-                        <form action="#" method="POST" class="flex items-center gap-3">
+                        <form action="{{ route('cart.items.store') }}" method="POST" class="flex items-center gap-3">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                             <x-quantity-input :max="$product->stock" />

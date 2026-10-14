@@ -18,5 +18,21 @@
         @else
             <p class="text-xs text-red-600">Out of Stock</p>
         @endif
+        <div class="pt-3">
+            @if ($product->stock <= 0)
+                <button type="button" disabled class="w-full rounded-lg bg-stone-200 py-2 text-sm text-stone-500">Out of Stock</button>
+            @else
+                @auth
+                    <form action="{{ route('cart.items.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="w-full rounded-lg bg-primary py-2 text-sm text-white hover:bg-primary-hover">Add to Cart</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="block w-full rounded-lg bg-primary py-2 text-center text-sm text-white hover:bg-primary-hover">Add to Cart</a>
+                @endauth
+            @endif
+        </div>
     </div>
 </article>

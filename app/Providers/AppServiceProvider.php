@@ -21,7 +21,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('components.navbar', function ($view) {
-            $view->with('categories', Category::orderBy('name')->get());
+            $cartCount = auth()->check()
+                ? (int) auth()->user()->cart?->products()->sum('cart_items.quantity')
+                : 0;
+
+            $view->with('categories', Category::orderBy('name')->get())
+                ->with('cartCount', $cartCount);
         });
     }
 }
