@@ -65,7 +65,7 @@
 
             <div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
                 @forelse ($products as $product)
-                    <x-product-card :product="$product" />
+                    <x-product-card :product="$product" :wishlisted="in_array($product->id, $wishlistedIds)" />
                 @empty
                     <p class="col-span-full py-12 text-center text-muted">No products found.</p>
                 @endforelse

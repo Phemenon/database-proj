@@ -28,5 +28,11 @@ class AppServiceProvider extends ServiceProvider
             $view->with('categories', Category::orderBy('name')->get())
                 ->with('cartCount', $cartCount);
         });
+
+        View::composer(['home', 'products.index', 'products.show', 'wishlist.index'], function ($view) {
+            $view->with('wishlistedIds', auth()->check()
+                ? auth()->user()->wishlistProducts()->pluck('products.id')->all()
+                : []);
+        });
     }
 }

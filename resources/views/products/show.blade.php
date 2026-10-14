@@ -48,9 +48,11 @@
                 @endif
 
                 @auth
-                    <form action="#" method="POST">
+                    <form action="{{ route('wishlist.toggle', $product) }}" method="POST">
                         @csrf
-                        <button type="submit" class="rounded-lg border border-line px-4 py-2 hover:bg-cream">♡ Add to Wishlist</button>
+                        <button type="submit" class="rounded-lg border border-line px-4 py-2 hover:bg-cream">
+                            {{ in_array($product->id, $wishlistedIds) ? '♥ Remove from Wishlist' : '♡ Add to Wishlist' }}
+                        </button>
                     </form>
                 @endauth
             </div>
