@@ -1,6 +1,6 @@
 @props(['product'])
 <article class="overflow-hidden rounded-xl border border-line bg-white">
-    <a href="#" class="block">
+    <a href="{{ route('products.show', $product) }}" class="block">
         <div class="relative aspect-square bg-stone-100">
             @if ($product->image_url)
                 <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="size-full object-cover">
@@ -10,7 +10,7 @@
     </a>
     <div class="space-y-1 p-4">
         <p class="text-xs text-muted">{{ $product->category?->name }}</p>
-        <a href="#" class="block font-medium hover:text-primary">{{ $product->name }}</a>
+        <a href="{{ route('products.show', $product) }}" class="block font-medium hover:text-primary">{{ $product->name }}</a>
         <p class="font-semibold">฿{{ number_format($product->price) }}</p>
         <x-star-rating :rating="$product->reviews_avg_rating" :count="$product->reviews_count" />
         @if ($product->stock > 0)

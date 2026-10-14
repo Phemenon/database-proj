@@ -32,4 +32,17 @@ class ProductController extends Controller
             'rarities'   => ['common', 'uncommon', 'rare', 'epic', 'legendary'],
         ]);
     }
+
+    public function show(Product $product)
+    {
+        $product->load('category')->loadAvg('reviews', 'rating')->loadCount('reviews');
+
+        $reviews = $product->reviews()->with('user')->latest()->paginate(5);
+
+        $userReview = auth()->check()
+            ? $product->reviews()->where('user_id', auth()->id())->first()
+            : null;
+
+        return view('products.show', compact('product', 'reviews', 'userReview'));
+    }
 }
