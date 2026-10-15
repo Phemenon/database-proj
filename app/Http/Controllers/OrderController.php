@@ -30,4 +30,18 @@ class OrderController extends Controller
 
         return view('orders.show', compact('order', 'items'));
     }
+
+    public function pay(Request $request, Order $order)
+    {
+        abort_unless($order->user_id === $request->user()->id, 404);
+
+
+        if ($order->status !== 'pending') {
+            return back()->with('error', 'This order has already been processed.');
+        }
+
+        $order->update(['status' => 'paid']);
+
+        return back()->with('success', 'Payment successful! Order is now paid.');
+    }
 }

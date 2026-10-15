@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::patch('/orders/{order}/pay', [OrderController::class, 'pay'])->name('orders.pay');
 });
 
 //---------- temporary route for testing flash messages ----------

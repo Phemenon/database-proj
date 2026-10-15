@@ -52,6 +52,36 @@
                 <span>Total</span>
                 <span>฿{{ number_format($order->total) }}</span>
             </div>
+            
+            @if($order->status === 'pending')
+                {{-- กรอบใหญ่สีเขียวอ่อน --}}
+                <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0;" class="mt-6 p-5 rounded-2xl shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-base font-bold text-gray-900">Payment Required</h3>
+                                <span style="background-color: #fef3c7; color: #92400e;" class="px-2 py-0.5 text-xs font-semibold rounded-full">
+                                    Awaiting
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-1">Please confirm your payment to process this order.</p>
+                        </div>
+
+                        {{-- ปุ่มสี่เหลี่ยมสีเขียวเข้ม ตัวหนังสือสีขาวชัดเจน --}}
+                        <form action="{{ route('orders.pay', $order) }}" method="POST" class="shrink-0">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" 
+                                    style="background-color: #059669; color: #ffffff; border: none;"
+                                    class="w-full sm:w-auto px-6 py-3 font-semibold text-sm rounded-lg shadow hover:opacity-90 active:scale-95 transition cursor-pointer">
+                                Pay ฿{{ number_format($order->total, 2) }}
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            @endif
         </aside>
     </div>
 </x-layouts.app>
