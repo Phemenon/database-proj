@@ -45,7 +45,7 @@
                     </summary>
                     <div class="absolute right-0 mt-2 w-44 rounded-lg border border-line bg-white py-1 shadow-lg">
                         <a href="#" class="block px-4 py-2 text-sm hover:bg-cream">Profile</a>
-                        <a href="#" class="block px-4 py-2 text-sm hover:bg-cream">My Orders</a>
+                        <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm hover:bg-cream">My Orders</a>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <button type="submit" class="block w-full px-4 py-2 text-left text-sm hover:bg-cream">Sign out</button>

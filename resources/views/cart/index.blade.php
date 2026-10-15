@@ -62,7 +62,7 @@
                 @if ($hasStockIssue)
                     <button type="button" disabled class="mt-5 w-full rounded-lg bg-stone-300 py-2 text-stone-500">Please update quantities before checking out</button>
                 @else
-                    <a href="#" class="mt-5 block w-full rounded-lg bg-primary py-2 text-center text-white hover:bg-primary-hover">Go to Checkout</a>
+                    <a href="{{ route('checkout.create') }}" class="mt-5 block w-full rounded-lg bg-primary py-2 text-center text-white hover:bg-primary-hover">Go to Checkout</a>
                 @endif
             </aside>
         </div>
