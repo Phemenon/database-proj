@@ -52,6 +52,20 @@
                 <span>Total</span>
                 <span>฿{{ number_format($order->total) }}</span>
             </div>
+            @if ($order->status === 'pending')
+                <div class="space-y-2 border-t border-line pt-4">
+                    <a href="{{ route('orders.pay', $order) }}"
+                    class="block w-full rounded-lg bg-primary py-2 text-center text-white hover:bg-primary-hover">pay</a>
+
+                    <form action="{{ route('orders.cancel', $order) }}" method="POST"
+                        onsubmit="return confirm('you sure you want to cancel this order?')">
+                        @csrf
+                        <button type="submit" class="w-full rounded-lg border border-red-300 py-2 text-sm text-red-600 hover:bg-red-50">
+                            cancel order
+                        </button>
+                    </form>
+                </div>
+            @endif
         </aside>
     </div>
 </x-layouts.app>

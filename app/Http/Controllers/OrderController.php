@@ -37,7 +37,7 @@ class OrderController extends Controller
 
         if ($order->status !== 'pending') {
             return redirect()->route('orders.show', $order)
-                ->with('warning', 'คำสั่งซื้อนี้ไม่อยู่ในสถานะรอชำระเงิน');
+                ->with('warning', 'this order is not in a pending payment status, so you cannot pay for it.');
         }
 
         return view('orders.pay', compact('order'));
@@ -54,10 +54,10 @@ class OrderController extends Controller
 
         if ($updated === 0) {
             return redirect()->route('orders.show', $order)
-                ->with('error', 'คำสั่งซื้อนี้ไม่อยู่ในสถานะรอชำระเงิน');
+                ->with('error', 'this order is not in a pending payment status, so you cannot confirm the payment.');
         }
 
-        return redirect()->route('orders.show', $order)->with('success', 'ชำระเงินสำเร็จ ขอบคุณที่ใช้บริการ!');
+        return redirect()->route('orders.show', $order)->with('success', 'payment confirmed successfully. thank you for your purchase!');
     }
 
     public function cancel(Request $request, Order $order)
@@ -69,7 +69,7 @@ class OrderController extends Controller
                 $current = DB::table('orders')->where('id', $order->id)->lockForUpdate()->first();
 
                 if ($current->status !== 'pending') {
-                    throw new \DomainException('คำสั่งซื้อนี้ไม่สามารถยกเลิกได้แล้ว');
+                    throw new \DomainException('this order is not in a pending status, so you cannot cancel it.');
                 }
 
                 $items = DB::table('order_items')->where('order_id', $order->id)->get();
@@ -85,9 +85,10 @@ class OrderController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('success', 'ยกเลิกคำสั่งซื้อแล้ว');
+        return back()->with('success', 'order canceled successfully.');
     }
 
+    // รวมการเช็กเจ้าของไว้ที่เดียว (ลดโค้ดซ้ำ) ทุก method ที่แตะ order เรียกใช้ก่อนทำอะไรทั้งหมด
     private function ensureOwner(Request $request, Order $order): void
     {
         abort_unless($order->user_id === $request->user()->id, 404);
