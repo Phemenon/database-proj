@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductController extends Controller
 {
@@ -44,5 +46,20 @@ class ProductController extends Controller
             : null;
 
         return view('products.show', compact('product', 'reviews', 'userReview'));
+    }
+
+    public function review(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'rating'  => ['required', 'integer', 'between:0,5'],
+            'comment' => ['required', 'string', 'max:2000'],
+        ]);
+
+        $product->reviews()->updateOrCreate(
+            ['user_id' => $request->user()->id],
+            $validated,
+        );
+
+        return back()->with('status', 'Review posted.');
     }
 }

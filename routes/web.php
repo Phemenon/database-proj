@@ -20,6 +20,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::controller(ProductController::class)->group(function () {
     Route::get('/products', 'index')->name('products.index');
     Route::get('/products/{product}', 'show')->name('products.show');
+    Route::post('/products/{product}/review', 'review')->name('product.review');
 });
 
 // ---------- not authenticated ----------
