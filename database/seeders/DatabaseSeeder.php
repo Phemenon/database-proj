@@ -17,9 +17,20 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        //summon demo user
+        $user_exist = User::where('name', 'Test User')->where('email', 'test@example.com')->exists();
+        
+        if ($user_exist)
+            $this->command?->info('Test User Already exists');
+        else 
+            User::factory()->create([
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+            ]);
+
+        //seed db with demo item
+        $this->call([
+            FrontendDemoSeeder::class,
         ]);
     }
 }
