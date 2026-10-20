@@ -9,7 +9,7 @@
 
             <div class="flex w-full items-center justify-between ">
                 <h1 class="text-2xl font-bold">Your Profile</h1>
-                <x-button type="submit" href="#">Edit</x-button>
+                {{-- <x-button type="submit" href="#">Edit</x-button> --}}
             </div>
 
             <div class="w-full flex flex-col"> 
