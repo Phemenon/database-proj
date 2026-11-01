@@ -82,11 +82,13 @@
 
         <div class="mt-4">{{ $reviews->links() }}</div>
 
+        {{-- Comment Block --}}
         @auth
-            <form action="#" method="POST" class="mt-8 space-y-4 rounded-xl border border-line bg-white p-5">
+            <form action="{{ route('product.review', $product)  }}" method="POST" class="mt-8 space-y-4 rounded-xl border border-line bg-white p-5">
                 @csrf
                 <h3 class="font-medium">{{ $userReview ? 'Edit Your Review' : 'Write a Review' }}</h3>
 
+                {{-- Star Block --}}
                 <div class="flex gap-2">
                     @foreach (range(1, 5) as $n)
                         <label class="cursor-pointer">
@@ -98,10 +100,12 @@
                 </div>
                 @error('rating') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
 
+                {{-- Comment Form Block --}}
                 <textarea name="comment" rows="3" placeholder="Tell us about your experience with this product..."
                           class="w-full rounded-lg border border-line px-3 py-2 text-sm focus:border-primary focus:outline-none">{{ old('comment', $userReview?->comment) }}</textarea>
                 @error('comment') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
 
+                {{-- Submit Button --}}
                 <button type="submit" class="rounded-lg bg-primary px-5 py-2 text-sm text-white hover:bg-primary-hover">
                     {{ $userReview ? 'Save Changes' : 'Submit Review' }}
                 </button>

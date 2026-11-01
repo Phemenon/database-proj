@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::controller(ProductController::class)->group(function () {
     Route::get('/products', 'index')->name('products.index');
     Route::get('/products/{product}', 'show')->name('products.show');
+    Route::post('/products/{product}/review', 'review')->name('product.review');
 });
 
 // ---------- not authenticated ----------
@@ -33,6 +35,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 
 // ---------- authenticated ----------
 Route::middleware('auth')->group(function () {
+    //---------- User ----------
+    Route::get('/user', [UserController::class, 'index'])->name('user');
     //---------- Cart ----------
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/items', [CartController::class, 'store'])->name('cart.items.store');
